@@ -93,13 +93,13 @@
         +'<div class="am-u-sm-7 am-list-main">'
 		+  '<div class="am-g am-g-collapse">'
 		+'	<p class="am-list-item-hd">'
-		+'	  <span><b>'+ obj['nicName'] +'</b></span>'
+		+'	  <span><b><a href="userdetail.html?id='+obj.id+'">'+ obj['nicName'] +'</a></b></span>'
 		+'	  <span class="first-span">达人积分 </span>'
 		+'	  <span class="second-span highlight">'+ obj['score'] +'</span>'
 		+'	</p>'
 		+'	<p class="am-list-item-hd">'
 		+'	  <span>'+ obj['location'] +'</span>'
-		+'	  <span class="first-span">擅长 </span>'
+		+'	  <span class="first-span">标签 </span>'
 		+'	  <span class="second-span">';
 			$.each(obj['label'],function(j,value) {			
 				list +='	  <span class="am-badge am-badge-warning am-radius">'+ value +'</span> ';
@@ -109,7 +109,7 @@
 		+'  </div>'
 		+'</div>'
 		+'<div class="am-u-sm-2">'
-        +'  <button type="button" class="am-btn am-btn-danger am-radius am-btn-sm am-fr">关注</button>'
+        +'  <button type="button" id="focus" class="am-btn am-btn-danger am-radius am-btn-sm am-fr" >关注</button>'
         +'</div>'
 		+'</li>';
 		});  
@@ -128,6 +128,7 @@
 		window.location.href = 'list.html?condition='+content;
 	}	
  });
+
 </script>
 </body>
 </html>
