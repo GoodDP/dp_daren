@@ -7,7 +7,7 @@
   <meta name="keywords" content="">
   <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Amaze UI Examples</title>
+  <title>达人推荐</title>
 
   <!-- Set render engine for 360 browser -->
   <meta name="renderer" content="webkit">
@@ -62,38 +62,7 @@
     <h2>本周热门达人</h2>
     <a href="#"><span class="am-list-news-more am-fr">更多 &raquo;</span></a>
   </div>
-  <div class="am-list-news-bd">
-    <ul class="am-list">
-      <!--缩略图在标题左边-->
-	  <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-        <div class="am-u-sm-3">
-          <div class="J_userRequest">
-            <img class="am-circle am-img-responsive" src="http://i3.dpfile.com/s/img/uc/default-avatar120c120.png" alt="我很囧，你保重....晒晒旅行中的那些囧！" width="50" height="50"/>
-          </div>
-        </div>
-        <div class="am-u-sm-7 am-list-main">
-		  <div class="am-g am-g-collapse">
-			<p class="am-list-item-hd">
-			  <span><b>李狗蛋</b></span>
-			  <span class="first-span">达人积分</span>
-			  <span class="second-span highlight">5500</span>
-			</p>
-			<p class="am-list-item-hd">
-			  <span>上海</span>
-			  <span class="first-span">擅长</span>
-			  <span class="second-span">
-			  <span class="am-badge am-badge-warning am-radius">火锅</span>
-			  <span class="am-badge am-badge-warning am-radius">西餐</span>
-			  <span class="am-badge am-badge-warning am-radius">粤菜</span>
-			  </span>
-			</p>
-		  </div>
-		</div>
-		<div class="am-u-sm-2">
-          <button type="button" class="am-btn am-btn-danger am-radius am-btn-sm am-fr">关注</button>
-        </div>
-      </li>
-    </ul>
+  <div id="user-list" class="am-list-news-bd">
   </div>
 </div>
 
@@ -109,13 +78,45 @@
 <script type="text/javascript">
   $.ajax({
 	type: "POST",
-	url: 'http://10.128.53.31:8080/Server/topUsers',
-	 //data: {username:$("#username").val(), content:$("#content").val()},
+	url: 'user.json',
 	dataType: "json",
 	success:function(_data) {
-		alert(_data);
+		var list='<ul class="am-list">';
+		//i表示在data中的索引位置，obj表示包含的信息的对象  
+		$.each(_data,function(i,obj) {
+		 list += '<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">'
+		+'<div class="am-u-sm-3">'
+        +'  <div class="J_userRequest">'
+        +'    <img class="am-circle am-img-responsive" src="http://i3.dpfile.com/s/img/uc/default-avatar120c120.png" width="50" height="50"/>'
+        +'  </div>'
+        +'</div>'
+        +'<div class="am-u-sm-7 am-list-main">'
+		+  '<div class="am-g am-g-collapse">'
+		+'	<p class="am-list-item-hd">'
+		+'	  <span><b>'+ obj['nicName'] +'</b></span>'
+		+'	  <span class="first-span">达人积分 </span>'
+		+'	  <span class="second-span highlight">'+ obj['score'] +'</span>'
+		+'	</p>'
+		+'	<p class="am-list-item-hd">'
+		+'	  <span>'+ obj['location'] +'</span>'
+		+'	  <span class="first-span">擅长 </span>'
+		+'	  <span class="second-span">';
+			$.each(obj['label'],function(j,value) {			
+				list +='	  <span class="am-badge am-badge-warning am-radius">'+ value +'</span> ';
+			});
+		list+='	  </span>'
+		+'	</p>'
+		+'  </div>'
+		+'</div>'
+		+'<div class="am-u-sm-2">'
+        +'  <button type="button" class="am-btn am-btn-danger am-radius am-btn-sm am-fr">关注</button>'
+        +'</div>'
+		+'</li>';
+		});  
+		list += "</ul>";
+		$('#user-list').append(list);  
 	}, error: function() {
-		alert('test');
+		alert('数据获取失败！');
 	}
  });
 </script>
