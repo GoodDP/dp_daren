@@ -8,20 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
 public class TestClass extends HttpServlet
 {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String age = req.getParameter( "age" );
-		resp.setContentType( "text/html" );
 		PrintWriter out = resp.getWriter();
-		out.println( "<html>" );
-		out.println( "<body>" ) ;
-		out.println( "<h1>Hello Get</h1>" );
-		out.println( "<h1>Age : " + age + "</h1>"  );
-		out.println( "</body>" );
-		out.println( "</html>" ); 
+		String rank = req.getParameter("rank");
+		JSONArray ja = JSONArray.fromObject(null);
+		out.println( "result:"+rank+"-" + ja);
 		out.flush();
 	}
 
