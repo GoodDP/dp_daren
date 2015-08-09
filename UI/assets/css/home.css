@@ -10,6 +10,17 @@
     color: #fff;
 }
 
+.am-header-self .am-header-nav>a {
+    display: inline-block;
+    min-width: 36px;
+    text-align: center;
+    color: #eee;
+}
+
+.am-header-self .am-header-icon {
+    font-size: 20px;
+}
+
 .am-input-self {
     background-color: #ff7200;
 	color: #fff;
