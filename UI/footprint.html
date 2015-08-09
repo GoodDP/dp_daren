@@ -1,0 +1,105 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>足迹</title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+  <meta name="msapplication-TileColor" content="#0e90d2">
+
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/home.css">
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A32A2NuQWzOBqYDPGxDLcVB7"></script>
+  <script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/changeMore.js"></script>
+  <style type="text/css">
+	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+  </style>
+</head>
+<body>
+<!-- Header -->
+<header data-am-widget="header" class="am-header am-header-self">
+    <div class="am-header-left am-header-nav">
+        <a href="#left-link" class="">
+            <img class="am-header-icon-custom" src="data:image/svg+xml;charset=utf-8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 12 20&quot;&gt;&lt;path d=&quot;M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z&quot; fill=&quot;%23fff&quot;/&gt;&lt;/svg&gt;"
+                 alt="" />
+        </a>
+    </div>
+  <h1 class="am-header-title">
+    搜索结果
+  </h1>
+</header>
+<div id="allmap"></div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="assets/js/jquery.min.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="assets/js/amazeui.min.js"></script>
+<script type="text/javascript">
+	// 百度地图API功能
+	map = new BMap.Map("allmap");
+	var point = new BMap.Point(121.4258930000,31.2280400000);
+	map.centerAndZoom(point,12);
+	map.enableScrollWheelZoom();
+	//根据IP定位地图中心
+	var myCity = new BMap.LocalCity();
+	function myFun(result){
+		var cityName = result.name;
+		map.setCenter(cityName);
+	}
+	myCity.get(myFun);
+
+	var markers = [];
+	var points_g = [[121.547277,31.27148246],[121.557277,31.28148246],[121.527277,31.25148246]];
+	var points_g2 = new Array();
+	for(var i=0;i<points_g.length;i++)
+	{
+		points_g2[i] = new BMap.Point(points_g[i][0], points_g[i][1]);
+	}
+	function callback(xyResults){
+		var xyResult = null;
+		for(var index in xyResults){
+			xyResult = xyResults[index];
+			if(xyResult.error != 0){continue;}//出错就直接返回;
+			var point = new BMap.Point(xyResult.x, xyResult.y);
+			var marker = new BMap.Marker(point);
+			//var marker = new BMap.Marker(point);
+			
+			map.addOverlay(marker);
+		}
+	}
+	setTimeout(function(){
+		BMap.Convertor.transMore(points_g2,2,callback);        //一秒之后开始进行坐标转换。参数2，表示是从GCJ-02坐标到百度坐标。参数0，表示是从GPS到百度坐标
+	}, 1000);
+</script>
+</body>
+</html>
