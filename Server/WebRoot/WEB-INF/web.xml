@@ -14,7 +14,16 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>TestClass</servlet-name>
-		<url-pattern>/servlet/TestClass</url-pattern>
+		<url-pattern>/indexRank</url-pattern>
 	</servlet-mapping>
-	
+	<!-- 
+	<servlet>
+		<servlet-name>TestClass</servlet-name>
+	<servlet-class>com.dianping.servlet.TestClass</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestClass</servlet-name>
+		<url-pattern>/indexRank</url-pattern>
+	</servlet-mapping>
+	 -->
 </web-app>
