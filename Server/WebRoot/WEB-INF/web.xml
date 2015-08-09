@@ -9,21 +9,43 @@
 	</welcome-file-list>
 
 	<servlet>
-		<servlet-name>TestClass</servlet-name>
-		<servlet-class>com.dianping.servlet.TestClass</servlet-class>
+		<servlet-name>TopUsers</servlet-name>
+		<servlet-class>com.dianping.servlet.TopUsers</servlet-class>
 	</servlet>
+	
+	<!-- 搜索结果页面 -->
+	<servlet>
+		<servlet-name>ResearchResult</servlet-name>
+		<servlet-class>com.dianping.servlet.ResearchResult</servlet-class>
+	</servlet>
+	
 	<servlet-mapping>
-		<servlet-name>TestClass</servlet-name>
-		<url-pattern>/indexRank</url-pattern>
+		<servlet-name>TopUsers</servlet-name>
+		<url-pattern>/topUsers</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ResearchResult</servlet-name>
+		<url-pattern>/researchResult</url-pattern>
 	</servlet-mapping>
 	<!-- 
 	<servlet>
 		<servlet-name>TestClass</servlet-name>
 	<servlet-class>com.dianping.servlet.TestClass</servlet-class>
 	</servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>ResearchResult</servlet-name>
+    <servlet-class>com.dianping.servlet.ResearchResult</servlet-class>
+  </servlet>
+
 	<servlet-mapping>
 		<servlet-name>TestClass</servlet-name>
 		<url-pattern>/indexRank</url-pattern>
 	</servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ResearchResult</servlet-name>
+    <url-pattern>/servlet/ResearchResult</url-pattern>
+  </servlet-mapping>
 	 -->
 </web-app>
