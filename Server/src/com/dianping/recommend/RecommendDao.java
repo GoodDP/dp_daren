@@ -51,7 +51,6 @@ public class RecommendDao {
 	
 	public List<User> queryUserByRank(){
 		List<User> users = new ArrayList<User>();
-		init();
 		try {
 		
 		ResultSet resultset = statement.executeQuery
@@ -59,9 +58,13 @@ public class RecommendDao {
 		
 		while (resultset.next()){
 			User user = new User();
-			user.setId(resultset.getInt("id"));
+			int uid = resultset.getInt("id");
+			user.setId(uid);
 			user.setScore(resultset.getInt("score"));
-			user.setPic(resultset.getString("pic"));
+			//没有头像，根据用户id生成头像
+			String pic_url = resultset.getString("pic");
+			if(pic_url==null) pic_url = "photos/PIC_10"+String.format("%02d", uid%23+1)+".jpg";
+			user.setPic(pic_url);
 			user.setNicName(resultset.getString("nicname"));
 			user.setLocation(resultset.getString("location"));
 			String label = resultset.getString("label");
@@ -75,7 +78,6 @@ public class RecommendDao {
 				}
 				user.setLabel(labList);
 			}
-			
 			users.add(user);
 		}
 		
@@ -107,7 +109,6 @@ public class RecommendDao {
 	public List<ShopRecommend> getShopByLabel(String label,int page,int size){
 		
 		List<ShopRecommend> SRs = new ArrayList<ShopRecommend>();
-		init();
 		try {
 		
 		ResultSet resultset = statement.executeQuery
@@ -156,32 +157,31 @@ public class RecommendDao {
 	
 	public User getUserById(int id){
 		User user = new User();
-		init();
 		try {
 		
 		ResultSet resultset = statement.executeQuery
 				("select * from user u where u.id="+id);
 		
-		while (resultset.next()){
+		if (resultset.next()){
 			user.setId(resultset.getInt("id"));
 			user.setScore(resultset.getInt("score"));
 			user.setPic(resultset.getString("pic"));
 			user.setNicName(resultset.getString("nicname"));
 			user.setLocation(resultset.getString("location"));
 			String label = resultset.getString("label");
-			String[] labels = label.split(",");
-			List<String> labList = new ArrayList<String>();
-			for (String lab :labels){
-				labList.add(lab);
+			if (label!=null){
+				String[] labels = label.split(",");
+				List<String> labList = new ArrayList<String>();
+				for (String lab :labels){
+					labList.add(lab);
+				}
+				user.setLabel(labList);
 			}
-			user.setLabel(labList);
 			ResultSet res = statement.executeQuery
-					("select f.id,f.footname from userfoot u, foot f where u.id="+id+" and u.fid=f.id");
+					("select f.id,f.footname from userfoot u, foot f where u.uid="+id+" and u.fid=f.id");
 			while (res.next()){
-				Map<String,Object> map = new HashMap<String,Object>();
-				map.put("id", res.getInt("id"));
-				map.put("name", res.getString("footname"));
-				user.footList.add(map);
+				user.footIds.add(res.getInt("id"));
+				user.footNames.add(res.getString("footname"));
 			}
 		}
 		
@@ -194,7 +194,6 @@ public class RecommendDao {
 	}
 	
 	public List<ShopRecommend> getUserByShopId(int shopId){
-		init();
 		List<ShopRecommend> SRs = new ArrayList<ShopRecommend>();
 		try {
 		ResultSet resultset = statement.executeQuery
@@ -236,7 +235,6 @@ public class RecommendDao {
 	
 	public ShopRecommend getShopById(int id){
 		ShopRecommend sr = new ShopRecommend();
-		init();
 		try {
 		
 		ResultSet resultset = statement.executeQuery
