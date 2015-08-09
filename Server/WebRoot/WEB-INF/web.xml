@@ -19,6 +19,14 @@
 		<servlet-class>com.dianping.servlet.ResearchResult</servlet-class>
 	</servlet>
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	<servlet-mapping>
 		<servlet-name>TopUsers</servlet-name>
 		<url-pattern>/topUsers</url-pattern>

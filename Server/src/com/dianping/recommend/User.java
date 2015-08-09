@@ -1,7 +1,8 @@
 package com.dianping.recommend;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
 
 public class User {
 	int id;
@@ -9,8 +10,13 @@ public class User {
 	String pic;
 	String nicName;
 	String location;
-	List<String> labels = new ArrayList<String>();
-	List<ShopRecommend> footList = new ArrayList<ShopRecommend>();
+	List<String> labels;
+	List<Map<String,Object>> footList;
+	
+	public User(){
+		labels = new ArrayList<String>();
+		footList = new ArrayList<Map<String,Object>>();
+	}
 	
 	public int getId(){return id;}
 	public void setId(int i){id =i;}
@@ -24,7 +30,7 @@ public class User {
 	public void setLocation(String loc) {location = loc;}
 	public List<String> getLabel() {return labels;}
 	public void setLabel(List<String> l) {labels = l;}
-	public List<ShopRecommend> getFootList(){return footList;}
-	public void setFootList(List<ShopRecommend> fl){footList=fl;}
+	public List<Map<String,Object>> getFootList(){return footList;}
+	public void setFootList(List<Map<String,Object>> fl){footList=fl;}
 	
 }

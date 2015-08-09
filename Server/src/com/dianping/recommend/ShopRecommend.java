@@ -1,6 +1,7 @@
 package com.dianping.recommend;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class ShopRecommend {
 	int shopId;
@@ -12,6 +13,10 @@ public class ShopRecommend {
 	double jingdu;
 	double weidu;
 	List<Integer> userIds;
+	
+	public ShopRecommend(){
+		userIds = new ArrayList<Integer>();
+	}
 	
 	public int getShopId(){return shopId;}
 	public void setShopId(int sid){shopId = sid;}
