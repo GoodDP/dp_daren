@@ -7,24 +7,52 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class RecommendDao {
-	private Connection connection ;
-	private Statement statement ;
+	
+	private static RecommendDao fd = new RecommendDao();
+	private RecommendDao()
+	{
+		init();
+	}
+
+	public static RecommendDao getInstance()
+	{
+		return fd;
+	}
+	private Connection connection  = null;
+	private Statement statement  = null;
 	final public static int indexUserNum = 10; 
 	final public static int darenScore = 5000;
 	
+	private void init(){
+		if (connection==null || statement==null)
+		{
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			
+			connection = DriverManager.getConnection
+					("jdbc:mysql://localhost/dianping", "root", "xurong");
+				
+			statement = connection.createStatement();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else;
+		
+	}
 	
 	public List<User> queryUserByRank(){
 		List<User> users = new ArrayList<User>();
+		init();
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		
-		connection = DriverManager.getConnection
-				("jdbc:mysql://localhost/dianping", "root", "xurong");
-			
-		statement = connection.createStatement();
-		
 		
 		ResultSet resultset = statement.executeQuery
 				("select * from user u where u.score>="+darenScore);
@@ -37,18 +65,20 @@ public class RecommendDao {
 			user.setNicName(resultset.getString("nicname"));
 			user.setLocation(resultset.getString("location"));
 			String label = resultset.getString("label");
-			String[] labels = label.split(",");
-			List<String> labList = new ArrayList<String>();
-			for (String lab :labels){
-				labList.add(lab);
+			
+			if(label!=null)
+			{
+				String[] labels = label.split(",");
+				List<String> labList = new ArrayList<String>();
+				for (String lab :labels){
+					labList.add(lab);
+				}
+				user.setLabel(labList);
 			}
-			user.setLabel(labList);
+			
 			users.add(user);
 		}
 		
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,13 +107,8 @@ public class RecommendDao {
 	public List<ShopRecommend> getShopByLabel(String label,int page,int size){
 		
 		List<ShopRecommend> SRs = new ArrayList<ShopRecommend>();
+		init();
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		
-		connection = DriverManager.getConnection
-				("jdbc:mysql://localhost/dianping", "root", "xurong");
-			
-		statement = connection.createStatement();
 		
 		ResultSet resultset = statement.executeQuery
 				("select * from shop s where s.label0="+label+" or "+"s.label1="+label+" or "+"s.label2="+label+" or "+"s.label3="+label);
@@ -100,9 +125,6 @@ public class RecommendDao {
 			SRs.add(sr);
 		}
 		
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,23 +147,17 @@ public class RecommendDao {
 		if (index>=SRs.size())
 			return new ArrayList<ShopRecommend>();
 		
+		//System.out.println(index+"-"+size+"-"+SRs.size());
 		if (index+size<SRs.size())
-			SRs.subList(index, index+size-1);
+			return SRs.subList(index, index+size);
 		else
-			SRs.subList(index, SRs.size()-1);
-		return SRs;
+			return SRs.subList(index, SRs.size());
 	}
 	
 	public User getUserById(int id){
 		User user = new User();
+		init();
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		
-		connection = DriverManager.getConnection
-				("jdbc:mysql://localhost/dianping", "root", "xurong");
-			
-		statement = connection.createStatement();
-		
 		
 		ResultSet resultset = statement.executeQuery
 				("select * from user u where u.id="+id);
@@ -160,17 +176,15 @@ public class RecommendDao {
 			}
 			user.setLabel(labList);
 			ResultSet res = statement.executeQuery
-					("select shopid from userfoot u, foot f where u.id="+id);
-			
+					("select f.id,f.footname from userfoot u, foot f where u.id="+id+" and u.fid=f.id");
 			while (res.next()){
-				ShopRecommend sr = getShopById(res.getInt("id"));
-				user.footList.add(sr);
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("id", res.getInt("id"));
+				map.put("name", res.getString("footname"));
+				user.footList.add(map);
 			}
 		}
 		
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -179,51 +193,12 @@ public class RecommendDao {
 		return user;
 	}
 	
-	public ShopRecommend getShopById(int id){
-		ShopRecommend sr = new ShopRecommend();
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		
-		connection = DriverManager.getConnection
-				("jdbc:mysql://localhost/dianping", "root", "xurong");
-			
-		statement = connection.createStatement();
-		
-		ResultSet resultset = statement.executeQuery
-				("select * from shop s where s.id="+id);
-		
-		while (resultset.next()){
-			
-			sr.setShopId(resultset.getInt("id"));
-			sr.setShopName(resultset.getString("shopname"));
-			sr.setAddress(resultset.getString("address"));
-			sr.setPic(resultset.getString("pic"));
-			sr.setRecommendNum(resultset.getInt("recommendnum"));
-			sr.setShopURL(resultset.getString("URL"));
-		}
-		
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return sr;
-	}
-	
 	public List<ShopRecommend> getUserByShopId(int shopId){
+		init();
 		List<ShopRecommend> SRs = new ArrayList<ShopRecommend>();
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		
-		connection = DriverManager.getConnection
-				("jdbc:mysql://localhost/dianping", "root", "xurong");
-			
-		statement = connection.createStatement();
-		
 		ResultSet resultset = statement.executeQuery
-				("select u from user u,recommend r where r.shopid="+shopId+" and "+"r.uid=u.id");
+				("select u from user u,review r where r.shopid="+shopId+" and "+"r.uid=u.id");
 		
 		while (resultset.next()){
 			ShopRecommend sr = new ShopRecommend();
@@ -237,9 +212,6 @@ public class RecommendDao {
 			SRs.add(sr);
 		}
 		
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -261,4 +233,31 @@ public class RecommendDao {
 		
 		return SRs;
 	}
+	
+	public ShopRecommend getShopById(int id){
+		ShopRecommend sr = new ShopRecommend();
+		init();
+		try {
+		
+		ResultSet resultset = statement.executeQuery
+				("select * from shop s where s.id="+id);
+		
+		while (resultset.next()){
+			
+			sr.setShopId(resultset.getInt("id"));
+			sr.setShopName(resultset.getString("shopname"));
+			sr.setAddress(resultset.getString("address"));
+			sr.setPic(resultset.getString("pic"));
+			sr.setRecommendNum(resultset.getInt("recommendnum"));
+			sr.setShopURL(resultset.getString("URL"));
+		}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sr;
+	}
+	
+	
 }

@@ -39,7 +39,7 @@
 <!-- Header -->
 <header data-am-widget="header" class="am-header am-header-self">
     <div class="am-header-left am-header-nav">
-        <a href="#left-link" class="">
+        <a onclick="history.back()" class="">
             <img class="am-header-icon-custom" src="data:image/svg+xml;charset=utf-8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 12 20&quot;&gt;&lt;path d=&quot;M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z&quot; fill=&quot;%23fff&quot;/&gt;&lt;/svg&gt;"
                  alt="" />
         </a>
@@ -70,7 +70,7 @@
                         </p>
                         <p class="am-list-item-hd">
                             <span>上海</span>
-                            <span class="first-span">擅长</span>
+                            <span class="first-span">标签</span>
 			  <span class="second-span">
 			  <span class="am-badge am-badge-warning am-radius">火锅</span>
 			  <span class="am-badge am-badge-warning am-radius">西餐</span>
@@ -96,10 +96,12 @@
                               <ul class="am-list">
                                   <!--缩略图在标题左边-->
                                   <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-                                      南京一日游
+                                      <div class="am-u-sm-8"><a href="#">南京一日游</a></div>
+
                                   </li>
                                   <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-                                      吃遍上海美食
+                                      <div class="am-u-sm-8"><a href="#">吃遍上海美食</a></div>
+
                                   </li>
                               </ul>
                            </div>
@@ -166,7 +168,7 @@
   var es = /id=/;
   es.exec(str);
   var right = RegExp.rightContext;
-  alert(right);
+  //alert(right);
 </script>
 </body>
 </html>

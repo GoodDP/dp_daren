@@ -2,7 +2,6 @@ package com.dianping.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,7 +23,7 @@ public class TopUsers extends HttpServlet
 			throws ServletException, IOException {
         OutputStream ps = resp.getOutputStream(); 
 		
-		RecommendDao rd = new RecommendDao();
+		RecommendDao rd = RecommendDao.getInstance();
 		List<User> users = rd.queryUserByRank();
 		
 		JSONArray ja = JSONArray.fromObject(users);
