@@ -2,6 +2,19 @@
 	margin-left: 20px;
 }
 
+.am-header-self {
+	background-color: #ff7200;
+}
+
+.am-header-self .am-header-title, .am-header-self .am-header-title a {
+    color: #fff;
+}
+
+.am-input-self {
+    background-color: #ff7200;
+	color: #fff;
+}
+
 @media (max-width: 460px) {
 	.first-span {
 		display: none;
