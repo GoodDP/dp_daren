@@ -44,13 +44,13 @@
 <!-- Header -->
 <header data-am-widget="header" class="am-header am-header-self">
     <div class="am-header-left am-header-nav">
-        <a href="#left-link" class="">
+        <a onclick="history.back()" class="">
             <img class="am-header-icon-custom" src="data:image/svg+xml;charset=utf-8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 12 20&quot;&gt;&lt;path d=&quot;M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z&quot; fill=&quot;%23fff&quot;/&gt;&lt;/svg&gt;"
                  alt="" />
         </a>
     </div>
   <h1 class="am-header-title">
-    搜索结果
+    足迹
   </h1>
 </header>
 <div id="allmap"></div>
@@ -70,13 +70,22 @@
 	var point = new BMap.Point(121.4258930000,31.2280400000);
 	map.centerAndZoom(point,12);
 	map.enableScrollWheelZoom();
+	var mapType1 = new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]});
+	var mapType2 = new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_LEFT});
+
+	var overView = new BMap.OverviewMapControl();
+	var overViewOpen = new BMap.OverviewMapControl({isOpen:true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT});
+	map.addControl(mapType1);          //2D图，卫星图
+	map.addControl(mapType2);          //左上角，默认地图控件
+	map.addControl(overView);          //添加默认缩略地图控件
+	map.addControl(overViewOpen);      //右下角，打开
 	//根据IP定位地图中心
-	var myCity = new BMap.LocalCity();
+	/*var myCity = new BMap.LocalCity();
 	function myFun(result){
 		var cityName = result.name;
 		map.setCenter(cityName);
 	}
-	myCity.get(myFun);
+	myCity.get(myFun);*/
 
 	var markers = [];
 	var points_g = [[121.547277,31.27148246],[121.557277,31.28148246],[121.527277,31.25148246]];
@@ -91,15 +100,16 @@
 			xyResult = xyResults[index];
 			if(xyResult.error != 0){continue;}//出错就直接返回;
 			var point = new BMap.Point(xyResult.x, xyResult.y);
-			var marker = new BMap.Marker(point);
-			//var marker = new BMap.Marker(point);
-			
+			var marker = new BMap.Marker(point);			
 			map.addOverlay(marker);
+			map.setCenter(point);
 		}
 	}
 	setTimeout(function(){
 		BMap.Convertor.transMore(points_g2,2,callback);        //一秒之后开始进行坐标转换。参数2，表示是从GCJ-02坐标到百度坐标。参数0，表示是从GPS到百度坐标
 	}, 1000);
+	
+	
 </script>
 </body>
 </html>

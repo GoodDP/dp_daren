@@ -122,6 +122,15 @@
 		alert('数据获取失败！');
 	}
  });
+ 
+  $('#searchBtn').click(function() {
+	var content = $('#searchCondition').val();
+	if(content == "") {
+		alert('请输入查询条件！');
+	} else {
+		window.location.href = 'list.html?condition='+content;
+	}	
+ });
 </script>
 </body>
 </html>
