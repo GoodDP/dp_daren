@@ -53,9 +53,9 @@
 	<form class="am-form">
 		<div class="am-g">
 			<div class="am-input-group">
-			  <input type="text" class="am-form-field" placeholder="输入的内容">
+			  <input id="searchCondition" type="text" class="am-form-field" placeholder="输入菜名/分类，寻找达人喜欢的店">
 			  <span class="am-input-group-btn">
-				<button class="am-btn am-input-self" type="button"><span class="am-icon-search"></span></button>
+				<button id="searchBtn" class="am-btn am-input-self" type="button"><span class="am-icon-search"></span></button>
 			  </span>
 			</div>
 		</div>
@@ -83,13 +83,13 @@
 <script src="assets/js/amazeui.min.js"></script>
 <script type="text/javascript">
   var str = window.location.href;
-  var es = /id=/;
+  var es = /condition=/;
   es.exec(str);
   var param = RegExp.rightContext;
 
   $.ajax({
-	type: "POST",
-	url: 'searchResult.json',
+	type: "GET",
+	url: 'researchResult?label="'+param+'"&page=1&size=5',
 	dataType: "json",
 	success:function(_data) {
 		var list='<ul class="am-list">';

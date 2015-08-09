@@ -77,8 +77,8 @@
 <script src="assets/js/amazeui.min.js"></script>
 <script type="text/javascript">
   $.ajax({
-	type: "POST",
-	url: 'user.json',
+	type: "GET",
+	url: 'topUsers',
 	dataType: "json",
 	success:function(_data) {
 		var list='<ul class="am-list">';
@@ -87,7 +87,7 @@
 		 list += '<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">'
 		+'<div class="am-u-sm-3">'
         +'  <a href="userdetail.html?id='+ obj.id +'">'
-        +'    <img class="am-circle am-img-responsive" src="assets/i/default-avatar.png" width="50" height="50"/>'
+        +'    <img class="am-circle am-img-responsive" src="'+ obj.pic +'" width="50" height="50"/>'
         +'  </a>'
         +'</div>'
         +'<div class="am-u-sm-7 am-list-main">'

@@ -92,7 +92,7 @@
   //获取用户基本信息
   $.ajax({
 	type: "GET",
-	url: 'foot.json',
+	url: 'userInfo?id='+id,
 	dataType: "json",
 	success:function(_data) {
 		var list='';
@@ -100,7 +100,7 @@
 		$.each(_data,function(i,obj) {
 		 list += '<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">'
 		+'<div class="am-u-sm-3">'
-        +'    <img class="am-circle am-img-responsive" src="assets/i/default-avatar.png" width="50" height="50"/>'
+        +'    <img class="am-circle am-img-responsive" src="'+ obj.pic +'" width="50" height="50"/>'
         +'</div>'
         +'<div class="am-u-sm-7 am-list-main">'
 		+  '<div class="am-g am-g-collapse">'
@@ -134,7 +134,7 @@
  //获取用户的足迹列表
  $.ajax({
 	type: "GET",
-	url: 'foot.json',
+	url: 'userInfo?id='+id,
 	dataType: "json",
 	success:function(_data) {
 		var list='';
