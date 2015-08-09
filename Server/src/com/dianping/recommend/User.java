@@ -11,11 +11,13 @@ public class User {
 	String nicName;
 	String location;
 	List<String> labels;
-	List<Map<String,Object>> footList;
+	List<Integer> footIds;
+	List<String> footNames;
 	
 	public User(){
 		labels = new ArrayList<String>();
-		footList = new ArrayList<Map<String,Object>>();
+		footIds = new ArrayList<Integer>();
+		footNames = new ArrayList<String>();
 	}
 	
 	public int getId(){return id;}
@@ -30,7 +32,9 @@ public class User {
 	public void setLocation(String loc) {location = loc;}
 	public List<String> getLabel() {return labels;}
 	public void setLabel(List<String> l) {labels = l;}
-	public List<Map<String,Object>> getFootList(){return footList;}
-	public void setFootList(List<Map<String,Object>> fl){footList=fl;}
+	public List<Integer> getFootIds() {return footIds;}
+	public void setFootIds(List<Integer> fi) {footIds = fi;}
+	public List<String> getFootName() {return footNames;}
+	public void setFootName(List<String> fn) {footNames = fn;}
 	
 }
