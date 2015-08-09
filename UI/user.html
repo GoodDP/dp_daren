@@ -33,56 +33,15 @@
 
   <link rel="stylesheet" href="assets/css/amazeui.min.css">
   <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/home.css">
 </head>
 <body>
 <!-- Header -->
 <header data-am-widget="header" class="am-header am-header-default">
   <h1 class="am-header-title">
-    Amaze UI
+    达人推荐
   </h1>
 </header>
-
-<nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1" data-am-menu-offcanvas>
-  <a href="javascript: void(0)" class="am-menu-toggle">
-    <i class="am-menu-toggle-icon am-icon-bars"></i>
-  </a>
-  <div class="am-offcanvas">
-    <div class="am-offcanvas-bar">
-      <ul class="am-menu-nav sm-block-grid-1">
-        <li class="am-parent">
-          <a href="##">公司</a>
-          <ul class="am-menu-sub am-collapse  sm-block-grid-2 ">
-            <li class="">
-              <a href="##">公司</a>
-            </li>
-            <li class="">
-              <a href="##">人物</a>
-            </li>
-            <li class="">
-              <a href="##">趋势</a>
-            </li>
-            <li class="">
-              <a href="##">投融资</a>
-            </li>
-            <li class="">
-              <a href="##">创业公司</a>
-            </li>
-            <li class="">
-              <a href="##">创业人物</a>
-            </li>
-            <li class="am-menu-nav-channel">
-              <a href="##" title="公司">进入栏目 &raquo;</a>
-            </li>
-          </ul>
-        </li>
-        <li class="">
-          <a href="##">创业人物</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
 <!-- List -->
 <div data-am-widget="list_news" class="am-list-news am-list-news-default">
   <!--列表标题-->
@@ -103,15 +62,23 @@
         <div class="am-u-sm-6 am-list-main">
 		  <div class="am-g am-g-collapse">
 			<p class="am-list-item-hd">
-			  <span>李二狗</span>  <span>达人积分:5500</span>
+			  <span><b>李狗蛋</b></span>
+			  <span class="first-span">达人积分</span>
+			  <span class="second-span highlight">5500</span>
 			</p>
 			<p class="am-list-item-hd">
-			  <span>上海</span>  <span>擅长:火锅 / 川菜 / 甜品</span>
+			  <span>上海</span>
+			  <span class="first-span">擅长</span>
+			  <span class="second-span">
+			  <span class="am-badge am-badge-warning am-radius">火锅</span>
+			  <span class="am-badge am-badge-warning am-radius">西餐</span>
+			  <span class="am-badge am-badge-warning am-radius">粤菜</span>
+			  </span>
 			</p>
 		  </div>
 		</div>
 		<div class="am-u-sm-3">
-          <button type="button" class="am-btn am-btn-success am-radius">+ 关注</button>
+          <button type="button" class="am-btn am-btn-success am-radius am-btn-sm am-fr">关注</button>
         </div>
       </li>
     </ul>

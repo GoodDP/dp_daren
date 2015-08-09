@@ -1,0 +1,16 @@
+.first-span {
+	margin-left: 20px;
+}
+
+@media (max-width: 460px) {
+	.first-span {
+		display: none;
+	}
+	.second-span {
+		margin-left: 10px;
+	}
+}
+
+.highlight {
+	color: #c7254e;
+}
