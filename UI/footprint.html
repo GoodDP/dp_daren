@@ -99,13 +99,15 @@
 	{
 		points_g2[i] = new BMap.Point(points_g[i][0], points_g[i][1]);
 	}
+	
+	var leftFoot = new BMap.Icon("assets/i/heart.gif", new BMap.Size(20,40));
 	function callback(xyResults){
 		var xyResult = null;
 		for(var index in xyResults){
 			xyResult = xyResults[index];
 			if(xyResult.error != 0){continue;}//出错就直接返回;
 			var point = new BMap.Point(xyResult.x, xyResult.y);
-			var marker = new BMap.Marker(point);			
+			var marker = new BMap.Marker(point, {icon:leftFoot});			
 			map.addOverlay(marker);
 			map.setCenter(point);
 		}
