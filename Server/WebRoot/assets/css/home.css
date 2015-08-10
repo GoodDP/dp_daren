@@ -1,3 +1,35 @@
+a {
+	background: transparent;
+	text-decoration: none;
+	-webkit-tap-higtlight-color:transparent;
+	color: #0088cc;
+}
+
+.am-list-news-hd.am-cf {
+  width: 100%;
+}
+
+.am-list {
+  margin-bottom: 0; 
+}
+
+.am-list-item-hd.self-title {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.am-list-item-hd.self-content {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
 .first-span {
 	margin-left: 20px;
 }
