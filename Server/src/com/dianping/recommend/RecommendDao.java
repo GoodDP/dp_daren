@@ -110,9 +110,10 @@ public class RecommendDao {
 		
 		List<ShopRecommend> SRs = new ArrayList<ShopRecommend>();
 		try {
-		
+		//String sts = "select * from shop s where s.label0 like '%"+label+"%' or s.label1 like '%"+label+"%' or s.label2 like '%"+label+"%' or s.label3 like '%"+label+"%' or s.shopname like '%"+label+"%';";
+		//System.out.println(label);
 		ResultSet resultset = statement.executeQuery
-				("select * from shop s where s.label0="+label+" or "+"s.label1="+label+" or "+"s.label2="+label+" or "+"s.label3="+label);
+				("select * from shop s where s.label0 like '%"+label+"%' or s.label1 like '%"+label+"%' or s.label2 like '%"+label+"%' or s.label3 like '%"+label+"%' or s.shopname like '%"+label+"%';");
 		
 		while (resultset.next()){
 			ShopRecommend sr = new ShopRecommend();
@@ -122,7 +123,11 @@ public class RecommendDao {
 			sr.setPic(resultset.getString("pic"));
 			sr.setRecommendNum(resultset.getInt("recommendnum"));
 			sr.setShopURL(resultset.getString("URL"));
-			
+			List<String> rs = new ArrayList<String>();
+			rs.add(resultset.getString("comment1"));
+			rs.add(resultset.getString("comment2"));
+			rs.add(resultset.getString("comment3"));
+			sr.setReviews(rs);
 			SRs.add(sr);
 		}
 		
@@ -163,9 +168,15 @@ public class RecommendDao {
 				("select * from user u where u.id="+id);
 		
 		if (resultset.next()){
-			user.setId(resultset.getInt("id"));
+			int uid = resultset.getInt("id");
+			user.setId(uid);
 			user.setScore(resultset.getInt("score"));
-			user.setPic(resultset.getString("pic"));
+			
+			//没有头像，根据用户id生成头像
+			String pic_url = resultset.getString("pic");
+			if(pic_url==null) pic_url = "photos/PIC_10"+String.format("%02d", uid%23+1)+".jpg";
+			user.setPic(pic_url);
+			
 			user.setNicName(resultset.getString("nicname"));
 			user.setLocation(resultset.getString("location"));
 			String label = resultset.getString("label");
@@ -193,21 +204,35 @@ public class RecommendDao {
 		return user;
 	}
 	
-	public List<ShopRecommend> getUserByShopId(int shopId){
-		List<ShopRecommend> SRs = new ArrayList<ShopRecommend>();
+	public List<User> getUserByShopId(int shopId){
+		List<User> SRs = new ArrayList<User>();
 		try {
 		ResultSet resultset = statement.executeQuery
-				("select u from user u,review r where r.shopid="+shopId+" and "+"r.uid=u.id");
+				("select u.* from user u,review r where r.shopid="+shopId+" and "+"r.userid=u.id");
 		
 		while (resultset.next()){
-			ShopRecommend sr = new ShopRecommend();
-			sr.setShopId(resultset.getInt("id"));
-			sr.setShopName(resultset.getString("shopname"));
-			sr.setAddress(resultset.getString("address"));
-			sr.setPic(resultset.getString("pic"));
-			sr.setRecommendNum(resultset.getInt("recommendnum"));
-			sr.setShopURL(resultset.getString("URL"));
+			User sr = new User();
+			int uid = resultset.getInt("id");
+			sr.setId(uid);
+			sr.setScore(resultset.getInt("score"));
+			sr.setNicName(resultset.getString("nicname"));
 			
+			//没有头像，根据用户id生成头像
+			String pic_url = resultset.getString("pic");
+			if(pic_url==null) pic_url = "photos/PIC_10"+String.format("%02d", uid%23+1)+".jpg";
+			sr.setPic(pic_url);
+			sr.setLocation(resultset.getString("location"));
+			
+			Statement statement0 = connection.createStatement();
+			ResultSet result = statement0.executeQuery
+					("select comment1,comment2,comment3 from shop where id="+shopId);
+			if (result.next()){
+				List<String> srreviews = new ArrayList<String>();
+				srreviews.add(result.getString("comment1"));
+				srreviews.add(result.getString("comment2"));
+				srreviews.add(result.getString("comment3"));
+				sr.setReviews(srreviews);	
+			}
 			SRs.add(sr);
 		}
 		
@@ -217,18 +242,10 @@ public class RecommendDao {
 		}
 		
 		if (SRs.size()==0)
-			return new ArrayList<ShopRecommend>();
+			return new ArrayList<User>();
 		
-		for (int i=SRs.size()-1;i>0;i--)
-			for (int j=0;j<i;j++)
-			{
-				if (SRs.get(j).recommendNum<SRs.get(j+1).recommendNum)
-				{
-					ShopRecommend tempU = SRs.get(j);
-					SRs.set(j, SRs.get(j+1));
-					SRs.set(j+1,tempU);
-				}
-			}
+		if (SRs.size()>3)
+			return SRs.subList(0, 3);
 		
 		return SRs;
 	}

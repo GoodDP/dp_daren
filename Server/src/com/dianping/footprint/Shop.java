@@ -1,10 +1,7 @@
-package com.dianping.recommend;
+package com.dianping.footprint;
 
-import java.util.List;
-import java.util.ArrayList;
-
-public class ShopRecommend {
-	int shopId;
+public class Shop {
+	int id;
 	int recommendNum;
 	String shopName;
 	String address;
@@ -12,14 +9,9 @@ public class ShopRecommend {
 	String shopURL;
 	double jingdu;
 	double weidu;
-	List<String> reviews;
 	
-	public ShopRecommend(){
-		reviews = new ArrayList<String>();
-	}
-	
-	public int getShopId(){return shopId;}
-	public void setShopId(int sid){shopId = sid;}
+	public int getShopId(){return id;}
+	public void setShopId(int sid){id = sid;}
 	public int getRecommendNum() {return recommendNum;}
 	public void setRecommendNum(int rnum) {recommendNum = rnum;}
 	public String getShopName() {return shopName;}
@@ -34,6 +26,4 @@ public class ShopRecommend {
 	public void setJingdu(double jd) {jingdu = jd;}
 	public double getWeidu() {return weidu;}
 	public void setWeidu(double wd) {weidu = wd;}
-	public List<String> getReviews(){return reviews;}
-	public void setReviews(List<String> uid){reviews = uid;}
 }

@@ -7,7 +7,7 @@
   <meta name="keywords" content="">
   <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>达人详情</title>
+  <title>达人推荐</title>
 
   <!-- Set render engine for 360 browser -->
   <meta name="renderer" content="webkit">
@@ -38,38 +38,33 @@
 <body>
 <!-- Header -->
 <header data-am-widget="header" class="am-header am-header-self">
-    <div class="am-header-left am-header-nav">
-        <a onclick="history.back()" class="">
-            <img class="am-header-icon-custom" src="data:image/svg+xml;charset=utf-8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 12 20&quot;&gt;&lt;path d=&quot;M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z&quot; fill=&quot;%23fff&quot;/&gt;&lt;/svg&gt;"
-                 alt="" />
-        </a>
-    </div>
   <h1 class="am-header-title">
-    达人详情
+    达人推荐
   </h1>
-  <div class="am-header-right am-header-nav">
-    <a href="index.html" class="">
-      <i class="am-header-icon am-icon-home"></i>
-    </a>
-  </div>
 </header>
-
+<div data-am-widget="search_form" class="am-list-news am-list-news-default">
+	<form class="am-form">
+		<div class="am-g">
+			<div class="am-input-group">
+			  <input id="searchCondition" type="text" class="am-form-field" placeholder="输入菜名/分类，寻找达人喜欢的店">
+			  <span class="am-input-group-btn">
+				<button id="searchBtn" class="am-btn am-input-self" type="button"><span class="am-icon-search"></span></button>
+			  </span>
+			</div>
+		</div>
+	</form>
+</div>
 <!-- List -->
 <div data-am-widget="list_news" class="am-list-news am-list-news-default">
-    <div class="am-list-news-bd">
-        <ul id="detail-list" class="am-list">
-        </ul>
-    </div>
-	
-	<div class="am-list-news-hd am-cf">
-		<h2>TA的足迹</h2>
-	  </div>
-	  <div class="am-list-news-bd">
-		<ul id="footprint-list" class="am-list">
-		</ul>
-	  </div>
+  <!--列表标题-->
+  <div class="am-list-news-hd am-cf">
+    <!--带更多链接-->
+    <h2>本周热门达人</h2>
+    <a href="#"><span class="am-list-news-more am-fr">更多 &raquo;</span></a>
+  </div>
+  <div id="user-list" class="am-list-news-bd">
+  </div>
 </div>
-
 
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="assets/js/jquery.min.js"></script>
@@ -81,28 +76,24 @@
 <![endif]-->
 <script src="assets/js/amazeui.min.js"></script>
 <script type="text/javascript">
-  var str = window.location.href;
-  var es = /id=/;
-  es.exec(str);
-  var id = RegExp.rightContext;
-  
-  //获取用户基本信息
   $.ajax({
 	type: "GET",
-	url: 'userInfo?id='+id,
+	url: 'topUsers',
 	dataType: "json",
 	success:function(_data) {
-		var list='';
+		var list='<ul class="am-list">';
 		//i表示在data中的索引位置，obj表示包含的信息的对象  
 		$.each(_data,function(i,obj) {
 		 list += '<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">'
 		+'<div class="am-u-sm-3">'
+        +'  <a href="userdetail.html?id='+ obj.id +'">'
         +'    <img class="am-circle am-img-responsive" src="'+ obj.pic +'" width="50" height="50"/>'
+        +'  </a>'
         +'</div>'
         +'<div class="am-u-sm-7 am-list-main">'
 		+  '<div class="am-g am-g-collapse">'
 		+'	<p class="am-list-item-hd">'
-		+'	  <span><b>'+ obj['nicName'] +'</b></span>'
+		+'	  <span><b><a href="userdetail.html?id='+obj.id+'">'+ obj['nicName'] +'</a></b></span>'
 		+'	  <span class="first-span">达人积分 </span>'
 		+'	  <span class="second-span highlight">'+ obj['score'] +'</span>'
 		+'	</p>'
@@ -121,33 +112,23 @@
         +'  <button type="button" id="focus" class="am-btn am-btn-danger am-radius am-btn-sm am-fr" >关注</button>'
         +'</div>'
 		+'</li>';
-		});
-		$('#detail-list').append(list);  
+		});  
+		list += "</ul>";
+		$('#user-list').append(list);  
 	}, error: function() {
 		alert('数据获取失败！');
 	}
  });
  
- //获取用户的足迹列表
- $.ajax({
-	type: "GET",
-	url: 'userInfo?id='+id,
-	dataType: "json",
-	success:function(_data) {
-		var list='';
-		//i表示在data中的索引位置，obj表示包含的信息的对象  
-		$.each(_data[0].footIds,function(i,obj) {
-		 list += '<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">'
-		+'<div class="am-u-sm-12">'
-		+'<a href="footprint.html?id='+ obj +'"><h3>'+ _data[0].footName[i] +'</h3></a>'
-        +'</div>'
-		+'</li>';
-		});
-		$('#footprint-list').append(list);
-	}, error: function() {
-		alert('数据获取失败！');
-	}
+ $('#searchBtn').click(function() {
+	var content = $('#searchCondition').val();
+	if(content == "") {
+		alert('请输入查询条件！');
+	} else {
+		window.location.href = 'list.html?condition='+content;
+	}	
  });
+
 </script>
 </body>
 </html>

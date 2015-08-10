@@ -13,11 +13,13 @@ public class User {
 	List<String> labels;
 	List<Integer> footIds;
 	List<String> footNames;
+	List<String> reviews;
 	
 	public User(){
 		labels = new ArrayList<String>();
 		footIds = new ArrayList<Integer>();
 		footNames = new ArrayList<String>();
+		reviews = new ArrayList<String>();
 	}
 	
 	public int getId(){return id;}
@@ -36,5 +38,7 @@ public class User {
 	public void setFootIds(List<Integer> fi) {footIds = fi;}
 	public List<String> getFootName() {return footNames;}
 	public void setFootName(List<String> fn) {footNames = fn;}
+	public List<String> getReviews() {return reviews;}
+	public void setReviews(List<String> r) {reviews = r;}
 	
 }

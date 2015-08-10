@@ -1,0 +1,40 @@
+.first-span {
+	margin-left: 20px;
+}
+
+.am-header-self {
+	background-color: #ff7200;
+}
+
+.am-header-self .am-header-title, .am-header-self .am-header-title a {
+    color: #fff;
+}
+
+.am-header-self .am-header-nav>a {
+    display: inline-block;
+    min-width: 36px;
+    text-align: center;
+    color: #eee;
+}
+
+.am-header-self .am-header-icon {
+    font-size: 20px;
+}
+
+.am-input-self {
+    background-color: #ff7200;
+	color: #fff;
+}
+
+@media (max-width: 460px) {
+	.first-span {
+		display: none;
+	}
+	.second-span {
+		margin-left: 10px;
+	}
+}
+
+.highlight {
+	color: #c7254e;
+}
