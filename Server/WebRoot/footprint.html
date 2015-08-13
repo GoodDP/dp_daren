@@ -129,6 +129,13 @@
 			var marker = new BMap.Marker(point, {icon:leftFoot});			
 			map.addOverlay(marker);
 			map.setCenter(point);
+			//alert(index);
+			(function(){  
+				var infoWindow = new BMap.InfoWindow('<p><b>'+ points_g.shopName[index] +'</b><br> '+ points_g.address[index] +'</p>');  // 创建信息窗口对象
+				marker.addEventListener("click", function(){        //给标注添加点击事件
+				    this.openInfoWindow(infoWindow);
+				});
+			})()
 		}
 	}
 	setTimeout(function(){

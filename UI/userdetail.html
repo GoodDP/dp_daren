@@ -68,6 +68,14 @@
 		<ul id="footprint-list" class="am-list">
 		</ul>
 	  </div>
+	  
+	  <div class="am-list-news-hd am-cf">
+		<h2>TA的点评</h2>
+	  </div>
+	  <div class="am-list-news-bd">
+		<ul id="comment-list" class="am-list">
+		</ul>
+	  </div>
 </div>
 
 
@@ -144,6 +152,36 @@
 		+'</li>';
 		});
 		$('#footprint-list').append(list);
+	}, error: function() {
+		alert('数据获取失败！');
+	}
+ });
+
+//获取用户的评论列表
+ $.ajax({
+	type: "GET",
+	url: 'userInfo?id='+id,
+	dataType: "json",
+	success:function(_data) {
+		var list='';
+		//i表示在data中的索引位置，obj表示包含的信息的对象  
+		$.each(_data[0].shopId,function(i,obj) {
+			var pic = obj+'.jpg';
+		 list += '<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">'
+		+'	<div class="am-u-sm-4">'
+		+'	  <a href="http://m.dianping.com/shop/'+ obj +'">'
+		+'			<img class="am-img-responsive" src="assets/i/'+ pic +'"  width="100" height="50"/>'
+		+'		<span>'+ _data[0].shopName[i] +'</span>'
+		+'		</a>'
+		+'	</div>'
+		+'	<div class="am-u-sm-8 am-list-main">'
+		+'		<div class="am-g am-g-collapse">'
+		+'			<p class="am-list-item-hd">'+ _data[0].shopReview[i] +'</p>'
+		+'		</div>'
+		+'	</div>'
+		+'</li>';
+		});
+		$('#comment-list').append(list);
 	}, error: function() {
 		alert('数据获取失败！');
 	}

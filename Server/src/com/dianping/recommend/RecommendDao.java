@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class RecommendDao {
@@ -25,7 +23,7 @@ public class RecommendDao {
 	}
 	private Connection connection  = null;
 	private Statement statement  = null;
-	final public static int indexUserNum = 10; 
+	final public static int indexUserNum = 50; 
 	final public static int darenScore = 5000;
 	
 	private void init(){
@@ -101,7 +99,7 @@ public class RecommendDao {
 			}
 		
 		if (users.size()>indexUserNum)
-			users.subList(0, indexUserNum);
+			return users.subList(0, indexUserNum);
 		
 		return users;
 	}     
@@ -188,11 +186,21 @@ public class RecommendDao {
 				}
 				user.setLabel(labList);
 			}
-			ResultSet res = statement.executeQuery
+			Statement statement0 = connection.createStatement();
+			ResultSet res = statement0.executeQuery
 					("select f.id,f.footname from userfoot u, foot f where u.uid="+id+" and u.fid=f.id");
 			while (res.next()){
 				user.footIds.add(res.getInt("id"));
 				user.footNames.add(res.getString("footname"));
+			}
+			
+			res = statement0.executeQuery
+					("select s.id, s.shopname, s.comment1 from shop s, review r where s.id = r.shopid and r.userid="+id);
+			
+			while (res.next()){
+				user.shopIds.add(res.getInt("id"));
+				user.shopNames.add(res.getString("shopname"));
+				user.shopReview.add(res.getString("comment1"));
 			}
 		}
 		

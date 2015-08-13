@@ -59,14 +59,20 @@ public class FootPrintDAO {
 				List<Shop> shops = new ArrayList<Shop>();
 				List<Double> weidu = new ArrayList<Double>();
 				List<Double> jingdu = new ArrayList<Double>();
+				List<String> shopNames = new ArrayList<String>();
+				List<String> address = new ArrayList<String>();
 				while (res.next()){
 					Shop shop = getShopById(res.getInt("shopid"));
 					weidu.add(shop.getWeidu());
 					jingdu.add(shop.getJingdu());
+					shopNames.add(shop.getShopName());
+					address.add(shop.getAddress());
 					//shops.add(res.getInt("priority"), shop);
 				}
 				foot.setJingdu(jingdu);
 				foot.setWeidu(weidu);
+				foot.setShopName(shopNames);
+				foot.setAddress(address);
 				//foot.setShops(shops);
 				;
 			}

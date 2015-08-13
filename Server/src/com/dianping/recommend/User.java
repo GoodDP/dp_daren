@@ -14,12 +14,19 @@ public class User {
 	List<Integer> footIds;
 	List<String> footNames;
 	List<String> reviews;
+	List<Integer> shopIds;
+	List<String> shopNames;
+	List<String> shopReview;
+	
 	
 	public User(){
 		labels = new ArrayList<String>();
 		footIds = new ArrayList<Integer>();
 		footNames = new ArrayList<String>();
 		reviews = new ArrayList<String>();
+		shopIds = new ArrayList<Integer>();
+		shopNames = new ArrayList<String>();
+		shopReview = new ArrayList<String>();
 	}
 	
 	public int getId(){return id;}
@@ -40,5 +47,11 @@ public class User {
 	public void setFootName(List<String> fn) {footNames = fn;}
 	public List<String> getReviews() {return reviews;}
 	public void setReviews(List<String> r) {reviews = r;}
+	public List<Integer> getShopId() {return shopIds;}
+	public void setShopId(List<Integer> si) {shopIds = si;}
+	public List<String> getShopName() {return shopNames;}
+	public void setShopName(List<String> sn) {shopNames  = sn;}
+	public List<String> getShopReview() {return shopReview;}
+	public void setShopReview(List<String> sr) {shopReview = sr;}
 	
 }

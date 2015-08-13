@@ -10,6 +10,8 @@ public class Foot {
 	//List<Shop> shops = new ArrayList<Shop>();
 	List<Double> weidu;
 	List<Double> jingdu;
+	List<String> shopNames;
+	List<String> address;
 	
 	public int getId() {return id;}
 	public void setId(int i) {id = i;}
@@ -23,4 +25,8 @@ public class Foot {
 	public void setWeidu(List<Double> w) {weidu=w;}
 	public List<Double> getJingdu() {return jingdu;}
 	public void setJingdu(List<Double> j) {jingdu = j;}
+	public List<String> getShopName() {return shopNames;}
+	public void setShopName(List<String> sn) {shopNames = sn;}
+	public List<String> getAddress() {return address;}
+	public void setAddress(List<String> a) {address = a;}
 }
